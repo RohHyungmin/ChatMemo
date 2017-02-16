@@ -11,7 +11,7 @@ import java.util.Date;
 
 @DatabaseTable(tableName = "memoSub")
 public class MemoSub {
-    @DatabaseField
+    @DatabaseField(generatedId = true)
     int id;
 
     @DatabaseField
@@ -43,8 +43,6 @@ public class MemoSub {
     public String  getMemoSub() {
      return memoSub;
     }
-
-
 
     public MemoSub() {
 

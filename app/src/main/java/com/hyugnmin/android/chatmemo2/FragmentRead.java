@@ -15,8 +15,10 @@ import android.widget.Button;
 
 import com.hyugnmin.android.chatmemo2.domain.Memo;
 import com.hyugnmin.android.chatmemo2.domain.MemoSub;
+import com.hyugnmin.android.chatmemo2.interfaces.DetailInterface;
 import com.hyugnmin.android.chatmemo2.interfaces.ListInterface;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +30,18 @@ public class FragmentRead extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
-    private List<MemoSub> datas2;
+    List<MemoSub> datas2 = new ArrayList<>();
+    List<Memo> datas;
 
 
     Context context = null;
     ListInterface listInterface = null;
+    DetailInterface detailInterface = null;
 
     View view = null;
     RecyclerView recyclerView;
     CardAdapter2 cardAdapter2;
+    CardAdapter cardAdapter;
 
 
 
@@ -54,6 +59,7 @@ public class FragmentRead extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
@@ -66,15 +72,13 @@ public class FragmentRead extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         view = inflater.inflate(R.layout.fragment_fragment_read, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list2);
 
-        List<MemoSub> datas2 = new ArrayList<>();
 
 
-        cardAdapter2 = new CardAdapter2(datas2, context);
+        cardAdapter2 = new CardAdapter2(datas2, getContext());
         recyclerView.setAdapter(cardAdapter2);
 
 
@@ -85,7 +89,11 @@ public class FragmentRead extends Fragment {
         }
 
 
-
+        try {
+            detailInterface.refreshData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return view;
     }
@@ -99,7 +107,7 @@ public class FragmentRead extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        this.listInterface = (ListInterface) context;
+        this.detailInterface = (DetailInterface) context;
     }
 
     @Override
@@ -111,11 +119,10 @@ public class FragmentRead extends Fragment {
         this.datas2 = datas2;
     }
 
-    public void refreshCardAdapter() {
+    public void refreshCardAdapter2() {
         cardAdapter2 = new CardAdapter2 (datas2, context);
         recyclerView.setAdapter(cardAdapter2);
         cardAdapter2.notifyDataSetChanged();
     }
-
 
 }

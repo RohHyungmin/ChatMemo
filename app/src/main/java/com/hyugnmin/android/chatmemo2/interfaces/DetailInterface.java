@@ -19,5 +19,7 @@ public interface DetailInterface {
     public void backToList();
     public void saveToList(Memo memo) throws SQLException;
     public void resetData() throws SQLException;
-    public void saveToRead(List<Memo> datas) throws  SQLException;
+    public void saveToRead() throws  SQLException;
+    public void loadData2()throws SQLException;
+    public void refreshData() throws SQLException;
 }

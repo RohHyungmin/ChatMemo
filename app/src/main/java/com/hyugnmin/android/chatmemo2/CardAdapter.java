@@ -1,6 +1,7 @@
 package com.hyugnmin.android.chatmemo2;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.hyugnmin.android.chatmemo2.domain.Gallery;
 import com.hyugnmin.android.chatmemo2.domain.Memo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,16 +26,15 @@ import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CustomViewHolder> {
    List<Memo> datas;
-
     Context context;
+    Uri fileUri = null;
+    List<Gallery> datasCamera = new ArrayList<>();
 
     public CardAdapter(List<Memo> datas, Context context){
         this.datas = datas;
         this.context = context;
     }
 
-
-    //뷰를 생성해서 홀더에 저장하는 역할
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_item, parent, false);
@@ -40,34 +44,46 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CustomViewHold
 
         return cvh;
     }
-    //listView 에서의 getView 함수를 대체
+
     @Override
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
        final Memo memo = datas.get(position);
         holder.textView.setText(memo.getMemo()+"");
         holder.position = position;
 
+//        final Gallery gallery = datasCamera.get(position);
+//        fileUri = gallery.getUri();
+        Log.i("사진장착", "사진장착~~~~~~~~~~~~~~~~!!!!");
+        Glide.with(context).load(fileUri).into(holder.imageViewWrite);
+
         //카드 뷰 애니메이션
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
+        Animation animation = Animation
+        Utils.loadAnimation(context, android.R.anim.slide_out_right);
         holder.cardView.setAnimation(animation);
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+      return datas.size();
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
         CardView cardView;
+        ImageView imageViewWrite;
         int position;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
+            imageViewWrite = (ImageView) itemView.findViewById(R.id.imageViewWrite);
 
         }
+    }
+
+    public void getFileUri(Uri fileUri) {
+        this.fileUri = fileUri;
     }
 }

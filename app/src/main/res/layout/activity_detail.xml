@@ -8,6 +8,18 @@
     tools:context="com.hyugnmin.android.chatmemo2.DetailActivity">
 
     <Button
+        android:text="Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnUdateDone" />
+
+    <Button
+        android:text="Update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnUpdate" />
+
+    <Button
         android:text="Delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,4 +46,14 @@
         android:layout_below="@+id/btnDelete"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/updateText"
+        android:layout_alignTop="@+id/textViewDetail"
+        android:layout_above="@+id/imageView" />
 </RelativeLayout>
