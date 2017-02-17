@@ -1,6 +1,7 @@
 package com.hyugnmin.android.chatmemo2;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyugnmin.android.chatmemo2.data.DBHelper2;
 import com.hyugnmin.android.chatmemo2.domain.Memo;
 import com.hyugnmin.android.chatmemo2.domain.MemoSub;
@@ -23,7 +26,8 @@ import java.util.List;
 
 public class DetailActivity extends MainActivity implements View.OnClickListener{
 
-    Button btnDelete, btnUpdate, btnUpdateDone;
+    Button btnUpdate, btnUpdateDone;
+    ImageButton btnDelete;
     TextView textViewDetail;
     ImageView imageView;
     Dao<MemoSub, Integer> memoSubDao;
@@ -41,7 +45,7 @@ public class DetailActivity extends MainActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        btnDelete = (Button)findViewById(R.id.btnDelete);
+        btnDelete = (ImageButton)findViewById(R.id.btnDelete);
         btnUpdate = (Button)findViewById(R.id.btnUpdate);
         btnUpdateDone= (Button) findViewById(R.id.btnUdateDone);
         textViewDetail = (TextView)findViewById(R.id.textViewDetail);
@@ -67,12 +71,20 @@ public class DetailActivity extends MainActivity implements View.OnClickListener
         }
     }
 
+    public void setImage() {
+
+    }
+
     public void getData(int positionID) throws SQLException{
         dbHelper2 = new DBHelper2(this);
         memoSubDao = dbHelper2.getMemoSubDao();
         MemoSub memoSub = memoSubDao.queryForId(positionID);
         String text = memoSub.getMemoSub();
         textViewDetail.setText(text);
+        String str2 = memoSub.getGalleryUri();
+        Uri detailURi = Uri.parse(str2);
+
+        Glide.with(this).load(detailURi).into(imageView);
         dbHelper2.close();
     }
 
@@ -106,10 +118,21 @@ public class DetailActivity extends MainActivity implements View.OnClickListener
                 btnUpdate.setVisibility(View.GONE);
                 btnUpdateDone.setVisibility(View.VISIBLE);
                 btnDelete.setVisibility(View.GONE);
+
+                dbHelper2 = new DBHelper2(this);
+                try {
+                    memoSubDao = dbHelper2.getMemoSubDao();
+                    MemoSub memoSub = memoSubDao.queryForId(positionID);
+                    updateText.setText(memoSub.getMemoSub());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Log.i("업뎃", "업뎃!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+
                 break;
 
             case R.id.btnUdateDone :
-
 
                 try {
                     updateData(positionID);
@@ -129,8 +152,6 @@ public class DetailActivity extends MainActivity implements View.OnClickListener
         dbHelper2 = new DBHelper2(this);
         memoSubDao = dbHelper2.getMemoSubDao();
         MemoSub memoSub = memoSubDao.queryForId(position);
-        Log.i("업뎃", "업뎃!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
-//        updateText.setText(memoSub.getMemoSub());
 
         String temp = updateText.getText().toString();
         memoSub.setMemoSub(temp);

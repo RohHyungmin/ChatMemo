@@ -5,7 +5,8 @@
     android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hyugnmin.android.chatmemo2.DetailActivity">
+    tools:context="com.hyugnmin.android.chatmemo2.DetailActivity"
+    android:background="#E0F2F1">
 
     <Button
         android:text="Done"
@@ -19,14 +20,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnUpdate" />
 
-    <Button
-        android:text="Delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/btnDelete" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -45,7 +38,11 @@
         android:id="@+id/textViewDetail"
         android:layout_below="@+id/btnDelete"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:shadowRadius="20"
+        android:layout_margin="20dp"
+        android:background="@drawable/radius"
+        android:gravity="center_vertical|center_horizontal" />
 
     <EditText
         android:layout_width="match_parent"
@@ -54,6 +51,20 @@
         android:ems="10"
         android:layout_centerHorizontal="true"
         android:id="@+id/updateText"
-        android:layout_alignTop="@+id/textViewDetail"
-        android:layout_above="@+id/imageView" />
+        android:layout_above="@+id/imageView"
+        style="@android:style/Widget.Material.EditText"
+        android:background="@drawable/radius"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/btnUdateDone" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:id="@+id/btnDelete"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

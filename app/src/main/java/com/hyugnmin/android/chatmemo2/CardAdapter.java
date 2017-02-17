@@ -54,11 +54,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CustomViewHold
 //        final Gallery gallery = datasCamera.get(position);
 //        fileUri = gallery.getUri();
         Log.i("사진장착", "사진장착~~~~~~~~~~~~~~~~!!!!");
-        Glide.with(context).load(fileUri).into(holder.imageViewWrite);
 
         //카드 뷰 애니메이션
-        Animation animation = Animation
-        Utils.loadAnimation(context, android.R.anim.slide_out_right);
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
         holder.cardView.setAnimation(animation);
     }
 
@@ -71,14 +69,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CustomViewHold
 
         TextView textView;
         CardView cardView;
-        ImageView imageViewWrite;
         int position;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
-            imageViewWrite = (ImageView) itemView.findViewById(R.id.imageViewWrite);
 
         }
     }

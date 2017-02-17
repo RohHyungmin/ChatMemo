@@ -21,9 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hyugnmin.android.chatmemo2.data.DBHelper;
+import com.hyugnmin.android.chatmemo2.domain.Gallery;
 import com.hyugnmin.android.chatmemo2.domain.Memo;
 import com.hyugnmin.android.chatmemo2.domain.MemoSub;
 import com.hyugnmin.android.chatmemo2.interfaces.DetailInterface;
@@ -41,11 +45,13 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FragmentWrite extends Fragment implements View.OnClickListener {
 
-    Button btnInput, btnDone, btnCamera;
+    Button btnInput;
+    ImageButton btnDone, btnCamera;
     EditText editTextInput;
     View view = null;
     RecyclerView recyclerViewMain;
     RecyclerViewMainAdapter recyclerViewMainAdapter;
+    ImageView imageViewWrite;
 
     Context context = null;
     DetailInterface detailInterface = null;
@@ -55,6 +61,8 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
     private final int REQ_CAMERA = 101;
     Uri fileUri = null;
     List<String> datasCamera = new ArrayList<>();
+
+    MainActivity activity;
 
 
 
@@ -78,10 +86,11 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
             view = inflater.inflate(R.layout.fragment_fragment_write, container, false);
 
             btnInput = (Button) view.findViewById(R.id.btnInput);
-            btnCamera = (Button) view.findViewById(R.id.btnCamera);
-            btnDone = (Button) view.findViewById(R.id.btnDone);
+            btnCamera = (ImageButton) view.findViewById(R.id.btnCamera);
+            btnDone = (ImageButton) view.findViewById(R.id.btnDone);
             editTextInput = (EditText) view.findViewById(R.id.editTextInput);
             recyclerViewMain = (RecyclerView) view.findViewById(R.id.recyclerViewMain);
+            imageViewWrite = (ImageView) view.findViewById(R.id.imageViewWrite);
 
             List<Memo> datas = new ArrayList<>();
 
@@ -89,7 +98,7 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
             recyclerViewMain.setAdapter(cardAdapter);
             recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
+            imageViewWrite.setVisibility(View.GONE);
 
             btnDone.setOnClickListener(this);
             btnInput.setOnClickListener(this);
@@ -125,12 +134,17 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnDone:
+
+                activity.getGalleryUri(fileUri);
+
                 try {
                     detailInterface.saveToRead();
                     detailInterface.resetData();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
+                imageViewWrite.setVisibility(View.GONE);
                 break;
 
             case R.id.btnCamera :
@@ -163,7 +177,12 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
         switch(requestCode) {
             case REQ_CAMERA :
                 if (resultCode == RESULT_OK && fileUri != null) {
+
+
+                    imageViewWrite.setVisibility(View.VISIBLE);
                     datasCamera = loadDataCamera();
+
+                    Glide.with(context).load(fileUri).into(imageViewWrite);
 
                     refreshCardAdapter();
 
@@ -184,6 +203,7 @@ public class FragmentWrite extends Fragment implements View.OnClickListener {
         ContentResolver resolver = getContext().getContentResolver();
         // 1. 데이터 Uri 정의
         Uri target = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
         // 2. projection 정의
         String projection[] = { MediaStore.Images.ImageColumns.DATA }; // 이미지 경로
         // 정렬 추가 - 날짜순 역순 정렬

@@ -3,6 +3,7 @@ package com.hyugnmin.android.chatmemo2;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements ListInterface, De
     public static final int REQ_DELETE = 1;
     public static final int REQ_UPDATE = 2;
     private final int REQ_PERMISSION = 100; // 권한요청코드
+
+    Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,10 +187,15 @@ public class MainActivity extends AppCompatActivity implements ListInterface, De
         MemoSub memoSub = new MemoSub();
         memoSub.setMemoSub(memoToMemoSub);
         memoSub.setDate(new Date(System.currentTimeMillis()));
+        memoSub.setGalleryUri(fileUri + "");
         memoSubDao.create(memoSub);
         dbHelper2.close();
 
         refreshData();
+    }
+
+    public void getGalleryUri (Uri uri) {
+        this.fileUri = uri;
     }
 
     @Override

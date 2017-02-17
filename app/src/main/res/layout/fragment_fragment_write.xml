@@ -1,9 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hyugnmin.android.chatmemo2.FragmentWrite">
+    tools:context="com.hyugnmin.android.chatmemo2.FragmentWrite"
+    android:background="#FFFFFF">
 
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:id="@+id/btnCamera"
+        android:layout_above="@+id/btnInput"
+        android:layout_alignLeft="@+id/btnInput"
+        android:layout_alignStart="@+id/btnInput"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:id="@+id/btnDone"
+        android:layout_above="@+id/btnCamera"
+        android:layout_alignLeft="@+id/btnCamera"
+        android:layout_alignStart="@+id/btnCamera"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@android:drawable/picture_frame"
+        android:id="@+id/imageViewWrite"
+        android:scaleType="centerCrop"
+        android:layout_height="150dp" />
 
     <Button
         android:text="Input"
@@ -14,23 +45,7 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/btnInput" />
 
-    <Button
-        android:text="Camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnInput"
-        android:layout_alignLeft="@+id/btnInput"
-        android:layout_alignStart="@+id/btnInput"
-        android:id="@+id/btnCamera" />
 
-    <Button
-        android:text="Done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnCamera"
-        android:layout_alignLeft="@+id/btnCamera"
-        android:layout_alignStart="@+id/btnCamera"
-        android:id="@+id/btnDone" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -44,15 +59,17 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btnInput"
         android:layout_toStartOf="@+id/btnInput"
-        android:hint="Input Content" />
+        android:hint="Input Content"
+        style="@android:style/Widget.Material.EditText" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerViewMain"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnDone" />
+        android:layout_above="@+id/btnDone"
+        android:layout_below="@+id/imageViewWrite"
+        android:background="#B2DFDB"/>
 
 </RelativeLayout>

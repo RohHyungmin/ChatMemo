@@ -50,9 +50,10 @@ public class CardAdapter2 extends RecyclerView.Adapter<CardAdapter2.CustomViewHo
 
         final MemoSub memoSub = datas2.get(position);
         holder.textViewCard2.setText(memoSub.getMemoSub()+"");
+        holder.textViewID.setText(memoSub.getId()+"");
+        holder.textViewDATE.setText(memoSub.getDate()+"");
+
         holder.positionID = memoSub.getId();
-
-
 
         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
         holder.cardView2.setAnimation(animation);
@@ -67,14 +68,18 @@ public class CardAdapter2 extends RecyclerView.Adapter<CardAdapter2.CustomViewHo
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewCard2;
+        TextView textViewCard2, textViewID, textViewDATE;
         CardView cardView2;
+
         int positionID;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             Log.i("여기까지된다", "여기까지된다~~~~~~~~~~~~~");
             textViewCard2 = (TextView) itemView.findViewById(R.id.textViewCard2);
+            textViewID = (TextView) itemView.findViewById(R.id.textViewID);
+            textViewDATE = (TextView) itemView.findViewById(R.id.textViewDATE);
+
             cardView2 = (CardView) itemView.findViewById(R.id.cardView2);
             cardView2.setOnClickListener(new View.OnClickListener() {
 

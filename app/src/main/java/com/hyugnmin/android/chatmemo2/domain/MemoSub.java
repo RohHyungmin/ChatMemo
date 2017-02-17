@@ -1,5 +1,7 @@
 package com.hyugnmin.android.chatmemo2.domain;
 
+import android.net.Uri;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -19,6 +21,18 @@ public class MemoSub {
 
     @DatabaseField
     String memoSub;
+
+    @DatabaseField
+    String galleryUri;
+
+
+    public String getGalleryUri() {
+        return galleryUri;
+    }
+
+    public void setGalleryUri(String galleryUri) {
+        this.galleryUri = galleryUri;
+    }
 
     public int getId() {
         return id;

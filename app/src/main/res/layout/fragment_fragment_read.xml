@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.hyugnmin.android.chatmemo2.FragmentRead">
+    tools:context="com.hyugnmin.android.chatmemo2.FragmentRead"
+    android:id="@+id/relativeREad"
+    android:background="#B2DFDB">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list2"
